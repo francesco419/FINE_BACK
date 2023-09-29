@@ -50,7 +50,7 @@ app.use(
   cors({
     origin: 'https://finedition.kr',
     methods: ['GET', 'POST'],
-    credentails: true
+    credentials: true
   })
 );
 
