@@ -60,6 +60,6 @@ app.post('/register', actionApi.postRegister);
 
 app.get('/getinfo', actionApi.getInfoData);
 
-app.listen(() => {
-  console.log('listening on port', PORT);
+app.listen(8080, () => {
+  console.log('listening on port', 8080);
 });
