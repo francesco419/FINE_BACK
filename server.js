@@ -46,8 +46,21 @@ const upload = multer({
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-//app.use(express.static(path.join(__dirname, '../finedition/public')));
 app.use(express.static('images'));
+app.use(
+  cors({
+    origin: 'https://finedition.kr/',
+    methods: ['GET', 'POST'],
+    credentails: true
+  })
+);
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    credentails: true
+  })
+);
 
 app.post('/test', actionApi.test);
 app.post('/logincheck', actionApi.postLoginCheck);
