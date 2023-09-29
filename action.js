@@ -3,26 +3,7 @@ const getConnection = require('./config/getConnection');
 
 exports.test = (req, res) => {
   console.log(req);
-  /* getConnection.getConnection((err, conn) => {
-    if (err) {
-      return res.send(err);
-    }
-    const exec = conn.query(
-      `update posts set text='${req.body.text}',tag='${
-        req.body.tag
-      }',img='${JSON.stringify(temp)}' where code='${req.body.code}';`,
-      (err, result) => {
-        conn.release();
-        if (err) {
-          console.log(err);
-          return res.send(err);
-        } else {
-          console.log(result);
-          return res.send(result);
-        }
-      }
-    );
-  }); */
+  res.send(err);
 };
 
 exports.postLoginCheck = (req, res) => {

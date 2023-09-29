@@ -43,26 +43,12 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('images'));
-/* app.use(
-  cors({
-    origin: 'https://finedition.kr/',
-    methods: ['GET', 'POST'],
-    credentails: true
-  })
-); */
-/* app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://finedition.kr/');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-}); */
 app.use(
   cors({
-    origin: 'https://finedition.kr',
+    origin: '*',
     methods: ['GET', 'POST', 'OPTION'],
     credentails: true
   })
@@ -77,7 +63,3 @@ app.get('/getinfo', actionApi.getInfoData);
 app.listen(() => {
   console.log('listening on port', PORT);
 });
-
-/* app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../finedition/public/index.html'));
-}); */
