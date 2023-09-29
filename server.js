@@ -48,7 +48,7 @@ app.use(express.json());
 app.use(express.static('images'));
 app.use(
   cors({
-    origin: '*',
+    origin: 'https://finedition.kr',
     methods: ['GET', 'POST'],
     credentails: true
   })
