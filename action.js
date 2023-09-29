@@ -2,8 +2,8 @@ const multer = require('multer');
 const getConnection = require('./config/getConnection');
 
 exports.test = (req, res) => {
-  console.log(req);
-  res.send(err);
+  console.log('CONNECTION SUCCESS');
+  res.send({ result: 'string' });
 };
 
 exports.postLoginCheck = (req, res) => {
