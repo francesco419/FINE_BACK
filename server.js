@@ -2,12 +2,12 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 //const static = require('serve-static');
-const dotenv = require('dotenv');
-const db = dotenv.config().parsed;
+require('dotenv').config();
 //const bodyParser = require('body-parser');
 const multer = require('multer');
 //const upload = multer({ dest: "./images/" });
 let actionApi = require('./action');
+
 const app = express();
 const { PORT } = process.env;
 

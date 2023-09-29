@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+require('dotenv').config();
 //const dbconfig = require('./dbconfig.json');
 const { POOL_PASSWORD, POOL_HOST, POOL_USER, POOL_DATABASE } = process.env;
 
