@@ -9,6 +9,7 @@ const multer = require('multer');
 //const upload = multer({ dest: "./images/" });
 let actionApi = require('./action');
 const app = express();
+const { PORT } = process.env;
 
 const fileFilter = (req, file, cb) => {
   // 확장자 필터링
@@ -45,7 +46,7 @@ const upload = multer({
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../finedition/public')));
+//app.use(express.static(path.join(__dirname, '../finedition/public')));
 app.use(express.static('images'));
 
 app.post('/test', actionApi.test);
@@ -54,10 +55,10 @@ app.post('/register', actionApi.postRegister);
 
 app.get('/getinfo', actionApi.getInfoData);
 
-app.listen(db.PORT, () => {
-  console.log('listening on port', db.PORT);
+app.listen(() => {
+  console.log('listening on port', PORT);
 });
 
-app.get('*', (req, res) => {
+/* app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../finedition/public/index.html'));
-});
+}); */

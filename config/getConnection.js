@@ -1,12 +1,13 @@
 const mysql = require('mysql');
 const dbconfig = require('./dbconfig.json');
+const { POOL_PASSWORD, POOL_HOST, POOL_USER, POOL_DATABASE } = process.env;
 
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: dbconfig.host,
-  user: dbconfig.user,
-  password: dbconfig.password,
-  database: dbconfig.database,
+  host: POOL_HOST, //dbconfig.host,
+  user: POOL_USER, //dbconfig.user,
+  password: POOL_PASSWORD, //dbconfig.password,
+  database: POOL_DATABASE, //dbconfig.database,
   debug: false,
   multipleStatements: true
 });
