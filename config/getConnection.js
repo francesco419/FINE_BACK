@@ -1,7 +1,8 @@
 const mysql = require('mysql');
 require('dotenv').config();
 //const dbconfig = require('./dbconfig.json');
-const { POOL_PASSWORD, POOL_HOST, POOL_USER, POOL_DATABASE } = process.env;
+const { POOL_PASSWORD, POOL_HOST, POOL_USER, POOL_DATABASE, POOL_PORT } =
+  process.env;
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -9,6 +10,7 @@ const pool = mysql.createPool({
   user: POOL_USER, //dbconfig.user,
   password: POOL_PASSWORD, //dbconfig.password,
   database: POOL_DATABASE, //dbconfig.database,
+  port: POOL_PORT,
   debug: false,
   multipleStatements: true
 });

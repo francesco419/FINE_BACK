@@ -58,11 +58,11 @@ exports.postRegister = (req, res) => {
   });
 };
 
-/* exports.getInfoData = (req, res) => {
-  console.log(req.query.id);
+exports.getInfoData = (req, res) => {
+  console.log(req.query);
   getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
-      `select * from info where contentid=(?);`,
+      `select * from infodata where contentid=(?);`,
       [req.query.id],
       (err, result) => {
         conn.release();
@@ -76,9 +76,9 @@ exports.postRegister = (req, res) => {
       }
     );
   });
-}; */
+};
 
-exports.getInfoData = (req, res) => {
+/* exports.getInfoData = (req, res) => {
   var connection = mysql.createConnection({
     host: POOL_HOST,
     user: POOL_USER,
@@ -95,20 +95,4 @@ exports.getInfoData = (req, res) => {
   });
 
   connection.end();
-  /* getConnection.getConnection(function (err, conn) {
-    const exec = conn.query(
-      `select * from info where contentid=(?);`,
-      [req.query.id],
-      (err, result) => {
-        conn.release();
-        if (err) {
-          console.log('info failed');
-          return res.send({ result: result, flag: false });
-        } else {
-          console.log('info success');
-          return res.send({ result: result, flag: true });
-        }
-      }
-    );
-  }); */
-};
+}; */

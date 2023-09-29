@@ -7,7 +7,6 @@ require('dotenv').config();
 const multer = require('multer');
 //const upload = multer({ dest: "./images/" });
 let actionApi = require('./action');
-
 const app = express();
 const { PORT } = process.env;
 
