@@ -43,13 +43,14 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+app.set('port', PORT || 3030);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('images'));
 app.use(
   cors({
     origin: '*',
-    methods: ['GET', 'POST', 'OPTION'],
+    methods: ['GET', 'POST'],
     credentails: true
   })
 );
@@ -60,6 +61,6 @@ app.post('/register', actionApi.postRegister);
 
 app.get('/getinfo', actionApi.getInfoData);
 
-app.listen(8080, () => {
-  console.log('listening on port', 8080);
+app.listen(PORT, () => {
+  console.log('listening on port', PORT);
 });
