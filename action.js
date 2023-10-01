@@ -34,7 +34,7 @@ exports.postRegister = (req, res) => {
   console.log(req.body);
   getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
-      'INSERT INTO userdata(name,email,keyword,photo,nationality,age,gender) VALUES(?,?,?,?,?,?,?);',
+      'INSERT INTO userdata(name,email,keyword,photo,nationality,birth,gender) VALUES(?,?,?,?,?,?,?);',
       [
         req.body.name,
         req.body.email,
