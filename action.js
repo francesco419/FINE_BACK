@@ -73,11 +73,11 @@ exports.postRegister = (req, res) => {
 };
 
 exports.getInfoData = (req, res) => {
-  console.log(req.query);
+  console.log(req.body.id);
   getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
-      `select * from infodata where contentid=(?);`,
-      [req.query.id],
+      `select * from tempdata where name=(?);`,
+      [req.body.id],
       (err, result) => {
         conn.release();
         if (err) {

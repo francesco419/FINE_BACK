@@ -99,7 +99,7 @@ app.post('/test', actionApi.test);
 app.post('/logincheck', actionApi.postLoginCheck);
 app.post('/register', actionApi.postRegister);
 
-app.get('/getinfo', actionApi.getInfoData);
+app.post('/getinfo', actionApi.getInfoData);
 
 app.listen(PORT, () => {
   console.log('listening on port', PORT);
