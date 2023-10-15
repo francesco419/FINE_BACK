@@ -20,6 +20,7 @@ function getConnection(callback) {
   pool.getConnection((err, conn) => {
     if (err) {
       console.log('Connection Error to MySQL');
+      console.log(err);
       return;
     }
     console.log('connection success');

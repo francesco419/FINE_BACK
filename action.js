@@ -1,13 +1,27 @@
 const multer = require('multer');
 const getConnection = require('./config/getConnection');
-var mysql = require('mysql');
 require('dotenv').config();
 //const dbconfig = require('./dbconfig.json');
-const { POOL_PASSWORD, POOL_HOST, POOL_USER, POOL_DATABASE } = process.env;
 
 exports.test = (req, res) => {
-  console.log('CONNECTION SUCCESS');
-  res.send({ result: 'string' });
+  console.log(req.body.id);
+  //return res.send({ result: result, flag: true, check: true });
+  /* getConnection.getConnection(function (err, conn) {
+    const exec = conn.query(
+      `SELECT * FROM tempdata WHERE iduserdata=(?) limit 1;`,
+      [req.body.id],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('result null error');
+          return res.send({ result: result, flag: false, check: false });
+        } else {
+          console.log('there is userinfo');
+          return res.send({ result: result, flag: true, check: true });
+        }
+      }
+    );
+  }); */
 };
 
 exports.postLoginCheck = (req, res) => {
