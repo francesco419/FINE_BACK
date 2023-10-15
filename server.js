@@ -98,6 +98,7 @@ app.post('/testimage', upload.array('file'), async (req, res) => {
 app.post('/test', actionApi.test);
 app.post('/logincheck', actionApi.postLoginCheck);
 app.post('/register', actionApi.postRegister);
+//app.post('/register', actionApi.postRegister);
 
 app.post('/getinfo', actionApi.getInfoData);
 
