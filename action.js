@@ -27,9 +27,9 @@ exports.test = (req, res) => {
 exports.postLoginCheck = (req, res) => {
   const compare = req.body.email;
   console.log(req.body.email);
-  getConnection.getConnection(function (err, conn) {
+  getConnection.getConnection((err, conn) => {
     const exec = conn.query(
-      `SELECT * FROM userdata WHERE email='${compare}'limit 1;`,
+      `SELECT * FROM userdata WHERE useremail='${compare}'limit 1;`,
       (err, result) => {
         conn.release();
         if (err) {
@@ -48,15 +48,15 @@ exports.postRegister = (req, res) => {
   console.log(req.body);
   getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
-      'INSERT INTO userdata(name,email,keyword,photo,nationality,birth,gender) VALUES(?,?,?,?,?,?,?);',
+      'INSERT INTO userdata(username,useremail,userkeyword,userImage,usernation,userbirth,usergender) VALUES(?,?,?,?,?,?,?);',
       [
-        req.body.name,
-        req.body.email,
-        JSON.stringify(req.body.keyword),
+        req.body.username,
+        req.body.useremail,
+        JSON.stringify(req.body.userkeyword),
         'null',
-        req.body.nationality,
-        req.body.age,
-        req.body.gender
+        req.body.usernation,
+        req.body.userbirth,
+        req.body.usergender
       ],
       (err, result) => {
         conn.release();

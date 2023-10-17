@@ -84,7 +84,7 @@ app.use(express.json());
 //app.use(express.static('file'));
 app.use(
   cors({
-    origin: 'https://finedition.kr',
+    origin: 'http://localhost:3000', //'https://finedition.kr',
     methods: ['GET', 'POST'],
     credentials: true
   })
