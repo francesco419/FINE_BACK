@@ -52,7 +52,7 @@ exports.postRegister = (req, res) => {
       [
         req.body.username,
         req.body.useremail,
-        JSON.stringify(req.body.userkeyword),
+        JSON.stringify(req.body.keyword),
         'null',
         req.body.usernation,
         req.body.userbirth,
