@@ -277,7 +277,7 @@ exports.getTravel = (req, res) => {
   console.log(req.query.userid);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
-      `select * from traveldata where userid=(?) limit=1;`,
+      `select * from traveldata where userid=(?) limit 1;`,
       [req.query.userid],
       (err, result) => {
         conn.release();
