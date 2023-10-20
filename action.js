@@ -59,13 +59,25 @@ exports.postRegister = (req, res) => {
         req.body.usergender
       ],
       (err, result) => {
-        conn.release();
         if (err) {
           console.log('register failed');
           return res.send({ result: result, flag: false });
         } else {
           console.log('register success');
-          return res.send({ result: result, flag: true });
+          const exec2 = conn.query(
+            'INSERT INTO bookmarkdata(useremail) VALUES(?);',
+            [req.body.useremail],
+            (err, result) => {
+              conn.release();
+              if (err) {
+                console.log('register failed');
+                return res.send({ result: result, flag: false });
+              } else {
+                console.log('register & bookmark success');
+                return res.send({ result: result, flag: true });
+              }
+            }
+          );
         }
       }
     );
@@ -90,6 +102,227 @@ exports.getInfoData = (req, res) => {
       }
     );
   });
+};
+
+exports.postBookmark = (req, res) => {
+  console.log(req.body.type);
+  console.log(req.body.useremail);
+  console.log(req.body.dataId);
+
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `UPDATE bookmarkdata SET bookmark = CONCAT(ifnull(bookmark,''),',?') WHERE useremail=(?);`,
+      [req.body.dataId, req.body.useremail],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+/**----------------like -------------------*/
+exports.postLikeAdd = (req, res) => {
+  console.log(req.body.userid);
+  console.log(req.body.dataId);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `INSERT INTO likedata(userid,likenum) VALUES(?,?);`,
+      [req.body.userid, req.body.dataId],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+exports.getLike = (req, res) => {
+  console.log(req.query.userid);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `select likenum from likedata where userid=(?);select bookmarknum from bookmarkdata where userid=(?);`,
+      [req.query.userid, req.query.userid],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+exports.getLikeBookmark = (req, res) => {
+  console.log(req.query.userid);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `select likenum from likedata where userid=(?);select bookmarknum from bookmarkdata where userid=(?);`,
+      [req.query.userid, req.query.userid],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+exports.checklikebookmark = (req, res) => {
+  console.log(req.query.userid);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `select * from likedata where userid=(?) and likenum=(?);select * from bookmarkdata where userid=(?) and bookmarknum=(?);`,
+      [req.query.userid, req.query.dataid, req.query.userid, req.query.dataid],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+exports.postLikeDel = (req, res) => {
+  console.log(req.body.userid);
+  console.log(req.body.dataId);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `delete from likedata where userid=(?) and likenum=(?);`,
+      [req.body.userid, req.body.dataId],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+/**----------------bookmark -------------------*/
+
+exports.postBookmarkAdd = (req, res) => {
+  console.log(req.body.userid);
+  console.log(req.body.dataId);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `INSERT INTO bookmarkdata(userid,bookmarknum) VALUES(?,?);`,
+      [req.body.userid, req.body.dataId],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+exports.getBookmark = (req, res) => {
+  console.log(req.query.userid);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `select bookmarknum from bookmarkdata where userid=(?)`,
+      [req.query.userid],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+exports.postBookmarkDel = (req, res) => {
+  console.log(req.body.userid);
+  console.log(req.body.dataId);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `delete from bookmarkdata where userid=(?) and bookmarknum=(?);`,
+      [req.body.userid, req.body.dataId],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+/**----------------travel -------------------*/
+
+exports.getTravel = (req, res) => {
+  console.log(req.query.userid);
+  getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `select * from traveldata where userid=(?)`,
+      [req.query.userid],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('travel GET failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          console.log('travel GET success');
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+exports.postTravel = (req, res) => {
+  console.log(req).body;
+  /* getConnection.getConnection((err, conn) => {
+    const exec = conn.query(
+      `UPDATE bookmarkdata SET bookmark = CONCAT(ifnull(bookmark,''),',?') WHERE useremail=(?);`,
+      [req.body.dataId, req.body.useremail],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  }); */
 };
 
 /* exports.getInfoData = (req, res) => {

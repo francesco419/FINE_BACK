@@ -84,8 +84,8 @@ app.use(express.json());
 //app.use(express.static('file'));
 app.use(
   cors({
-    origin: 'https://finedition.kr',
-    methods: ['GET', 'POST'],
+    origin: 'http://localhost:3000', //'https://finedition.kr',
+    methods: ['GET', 'POST', 'UPDATE'],
     credentials: true
   })
 );
@@ -98,6 +98,21 @@ app.post('/testimage', upload.array('file'), async (req, res) => {
 app.post('/test', actionApi.test);
 app.post('/logincheck', actionApi.postLoginCheck);
 app.post('/register', actionApi.postRegister);
+app.post('/postbookmark', actionApi.postBookmark);
+
+app.post('/postlikeadd', actionApi.postLikeAdd);
+app.post('/postlikedel', actionApi.postLikeDel);
+app.get('/getlike', actionApi.getLike);
+
+app.get('/getlikebookmark', actionApi.getLikeBookmark);
+app.get('/checklikebookmark', actionApi.checklikebookmark);
+
+app.post('/postbookmarkadd', actionApi.postBookmarkAdd);
+app.post('/postbookmarkdel', actionApi.postBookmarkDel);
+app.post('/getbookmark', actionApi.getBookmark);
+
+app.get('/gettravel', actionApi.getTravel);
+app.post('/posttravel', actionApi.postTravel);
 
 app.post('/getinfo', actionApi.getInfoData);
 
