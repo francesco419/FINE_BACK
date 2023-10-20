@@ -290,7 +290,7 @@ exports.getTravel = (req, res) => {
   console.log(req.query.userid);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
-      `select * from traveldata where userid=(?)`,
+      `select * from traveldata where userid=(?) limit=1;`,
       [req.query.userid],
       (err, result) => {
         conn.release();
@@ -307,11 +307,16 @@ exports.getTravel = (req, res) => {
 };
 
 exports.postTravel = (req, res) => {
-  console.log(req).body;
-  /* getConnection.getConnection((err, conn) => {
+  getConnection.getConnection((err, conn) => {
     const exec = conn.query(
-      `UPDATE bookmarkdata SET bookmark = CONCAT(ifnull(bookmark,''),',?') WHERE useremail=(?);`,
-      [req.body.dataId, req.body.useremail],
+      `insert into traveldata(userid,startDate,endDate,reason,modifyDate) values(?,?,?,?,?);`,
+      [
+        req.body.userid,
+        req.body.start,
+        req.body.end,
+        req.body.reason,
+        req.body.modify
+      ],
       (err, result) => {
         conn.release();
         if (err) {
@@ -322,7 +327,7 @@ exports.postTravel = (req, res) => {
         }
       }
     );
-  }); */
+  });
 };
 
 /* exports.getInfoData = (req, res) => {
