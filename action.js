@@ -64,20 +64,7 @@ exports.postRegister = (req, res) => {
           return res.send({ result: result, flag: false });
         } else {
           console.log('register success');
-          const exec2 = conn.query(
-            'INSERT INTO bookmarkdata(useremail) VALUES(?);',
-            [req.body.useremail],
-            (err, result) => {
-              conn.release();
-              if (err) {
-                console.log('register failed');
-                return res.send({ result: result, flag: false });
-              } else {
-                console.log('register & bookmark success');
-                return res.send({ result: result, flag: true });
-              }
-            }
-          );
+          return res.send({ result: result, flag: true });
         }
       }
     );
