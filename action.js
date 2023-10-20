@@ -72,8 +72,8 @@ exports.postRegister = (req, res) => {
 exports.getInfoData = (req, res) => {
   getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
-      `select * from tempdata where name=(?);`,
-      [req.body.id],
+      `select * from userdata where userid=(?);`,
+      [req.query.userid],
       (err, result) => {
         conn.release();
         if (err) {
@@ -88,17 +88,49 @@ exports.getInfoData = (req, res) => {
   });
 };
 
-exports.postBookmark = (req, res) => {
-  getConnection.getConnection((err, conn) => {
+/**----------------keyword update -------------------*/
+
+exports.updateKeyword = (req, res) => {
+  console.log(req.body);
+  getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
-      `UPDATE bookmarkdata SET bookmark = CONCAT(ifnull(bookmark,''),',?') WHERE useremail=(?);`,
-      [req.body.dataId, req.body.useremail],
+      `update userdata set userkeyword=(?) where userid=(?);`,
+      [JSON.stringify(req.body.userkeyword), req.body.userid],
       (err, result) => {
         conn.release();
         if (err) {
           console.log('info failed');
           return res.send({ result: result, flag: false });
         } else {
+          console.log('info success');
+          return res.send({ result: result, flag: true });
+        }
+      }
+    );
+  });
+};
+
+/**----------------update userdata -------------------*/
+
+exports.updateUser = (req, res) => {
+  getConnection.getConnection(function (err, conn) {
+    const exec = conn.query(
+      `update userdata set username=(?), userImage=(?), usernation=(?), usergender=(?),userbirth=(?) where userid=(?);`,
+      [
+        req.body.username,
+        req.files[0].location,
+        req.body.usernation,
+        req.body.usergender,
+        req.body.userbirth,
+        req.body.userid
+      ],
+      (err, result) => {
+        conn.release();
+        if (err) {
+          console.log('info failed');
+          return res.send({ result: result, flag: false });
+        } else {
+          console.log('info success');
           return res.send({ result: result, flag: true });
         }
       }

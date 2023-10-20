@@ -7,7 +7,7 @@ require('dotenv').config();
 //const upload = multer({ dest: "./images/" });
 let actionApi = require('./action');
 const app = express();
-const { PORT } = process.env;
+const { PORT, BUCKET } = process.env;
 
 const AWS = require('aws-sdk');
 const multer = require('multer');
@@ -29,7 +29,7 @@ const allowExtensions = ['.png', 'jpg', 'jpeg', 'bmp'];
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'finedition-bucket',
+    bucket: BUCKET,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: (req, file, callback) => {
       /* const uploadDirectory = req.query.directory; //업로드 할 경로 설정
@@ -46,38 +46,6 @@ const upload = multer({
   })
 });
 
-/* const fileFilter = (req, file, cb) => {
-  // 확장자 필터링
-  if (
-    file.mimetype === 'image/png' ||
-    file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg'
-  ) {
-    cb(null, true); // 해당 mimetype만 받겠다는 의미
-  } else {
-    // 다른 mimetype은 저장되지 않음
-    req.fileValidationError = 'jpg,jpeg,png,gif,webp 파일만 업로드 가능합니다.';
-    req.body = file;
-    cb(null, false);
-  }
-};
-
-const upload = multer({
-  storage: multer.diskStorage({
-    //폴더위치 지정
-    destination: (req, file, done) => {
-      done(null, './images/');
-    },
-    filename: (req, file, done) => {
-      const ext = path.extname(file.originalname);
-      // aaa.txt => aaa+&&+129371271654.txt
-      const fileName = path.basename(file.originalname, ext) + Date.now() + ext;
-      done(null, fileName);
-    }
-  }),
-  fileFilter: fileFilter
-}); */
-
 app.set('port', PORT || 3030);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -85,20 +53,19 @@ app.use(express.json());
 app.use(
   cors({
     origin: 'https://finedition.kr',
-    methods: ['GET', 'POST', 'UPDATE'],
+    methods: ['GET', 'POST', 'UPDATE', 'PUT'],
     credentials: true
   })
 );
 
-app.post('/testimage', upload.array('file'), async (req, res) => {
-  console.log(req.files);
-  //res.json({ url: req.file });
-});
+app.put('/updateuser', upload.array('file'), actionApi.updateUser);
 
 app.post('/test', actionApi.test);
 app.post('/logincheck', actionApi.postLoginCheck);
 app.post('/register', actionApi.postRegister);
-app.post('/postbookmark', actionApi.postBookmark);
+//app.update('/updateuser', actionApi.updateUser);
+
+app.put('/update/keyword', actionApi.updateKeyword);
 
 app.post('/postlikeadd', actionApi.postLikeAdd);
 app.post('/postlikedel', actionApi.postLikeDel);
@@ -114,7 +81,7 @@ app.post('/getbookmark', actionApi.getBookmark);
 app.get('/gettravel', actionApi.getTravel);
 app.post('/posttravel', actionApi.postTravel);
 
-app.post('/getinfo', actionApi.getInfoData);
+app.get('/getinfo', actionApi.getInfoData);
 
 app.listen(PORT, () => {
   console.log('listening on port', PORT);
