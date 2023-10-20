@@ -26,7 +26,6 @@ exports.test = (req, res) => {
 
 exports.postLoginCheck = (req, res) => {
   const compare = req.body.email;
-  console.log(req.body.email);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `SELECT * FROM userdata WHERE useremail='${compare}'limit 1;`,
@@ -45,7 +44,6 @@ exports.postLoginCheck = (req, res) => {
 };
 
 exports.postRegister = (req, res) => {
-  console.log(req.body);
   getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
       'INSERT INTO userdata(username,useremail,userkeyword,userImage,usernation,userbirth,usergender) VALUES(?,?,?,?,?,?,?);',
@@ -72,7 +70,6 @@ exports.postRegister = (req, res) => {
 };
 
 exports.getInfoData = (req, res) => {
-  console.log(req.body.id);
   getConnection.getConnection(function (err, conn) {
     const exec = conn.query(
       `select * from tempdata where name=(?);`,
@@ -92,10 +89,6 @@ exports.getInfoData = (req, res) => {
 };
 
 exports.postBookmark = (req, res) => {
-  console.log(req.body.type);
-  console.log(req.body.useremail);
-  console.log(req.body.dataId);
-
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `UPDATE bookmarkdata SET bookmark = CONCAT(ifnull(bookmark,''),',?') WHERE useremail=(?);`,
@@ -115,8 +108,6 @@ exports.postBookmark = (req, res) => {
 
 /**----------------like -------------------*/
 exports.postLikeAdd = (req, res) => {
-  console.log(req.body.userid);
-  console.log(req.body.dataId);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `INSERT INTO likedata(userid,likenum) VALUES(?,?);`,
@@ -135,7 +126,6 @@ exports.postLikeAdd = (req, res) => {
 };
 
 exports.getLike = (req, res) => {
-  console.log(req.query.userid);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `select likenum from likedata where userid=(?);select bookmarknum from bookmarkdata where userid=(?);`,
@@ -154,7 +144,6 @@ exports.getLike = (req, res) => {
 };
 
 exports.getLikeBookmark = (req, res) => {
-  console.log(req.query.userid);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `select likenum from likedata where userid=(?);select bookmarknum from bookmarkdata where userid=(?);`,
@@ -173,7 +162,6 @@ exports.getLikeBookmark = (req, res) => {
 };
 
 exports.checklikebookmark = (req, res) => {
-  console.log(req.query.userid);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `select * from likedata where userid=(?) and likenum=(?);select * from bookmarkdata where userid=(?) and bookmarknum=(?);`,
@@ -192,8 +180,6 @@ exports.checklikebookmark = (req, res) => {
 };
 
 exports.postLikeDel = (req, res) => {
-  console.log(req.body.userid);
-  console.log(req.body.dataId);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `delete from likedata where userid=(?) and likenum=(?);`,
@@ -214,8 +200,6 @@ exports.postLikeDel = (req, res) => {
 /**----------------bookmark -------------------*/
 
 exports.postBookmarkAdd = (req, res) => {
-  console.log(req.body.userid);
-  console.log(req.body.dataId);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `INSERT INTO bookmarkdata(userid,bookmarknum) VALUES(?,?);`,
@@ -233,7 +217,6 @@ exports.postBookmarkAdd = (req, res) => {
   });
 };
 exports.getBookmark = (req, res) => {
-  console.log(req.query.userid);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `select bookmarknum from bookmarkdata where userid=(?)`,
@@ -252,8 +235,6 @@ exports.getBookmark = (req, res) => {
 };
 
 exports.postBookmarkDel = (req, res) => {
-  console.log(req.body.userid);
-  console.log(req.body.dataId);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `delete from bookmarkdata where userid=(?) and bookmarknum=(?);`,
@@ -274,7 +255,6 @@ exports.postBookmarkDel = (req, res) => {
 /**----------------travel -------------------*/
 
 exports.getTravel = (req, res) => {
-  console.log(req.query.userid);
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
       `select * from traveldata where userid=(?) limit 1;`,
