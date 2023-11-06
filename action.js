@@ -289,7 +289,7 @@ exports.postBookmarkDel = (req, res) => {
 exports.getTravel = (req, res) => {
   getConnection.getConnection((err, conn) => {
     const exec = conn.query(
-      `select * from traveldata where userid=(?) limit 1;`,
+      `SELECT * FROM traveldata where userid=(?) order by modifyDate DESC limit 1;`,
       [req.query.userid],
       (err, result) => {
         conn.release();
